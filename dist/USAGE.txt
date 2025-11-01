@@ -1,0 +1,12 @@
+Turbo-Bucketizer — MVP
+Uso:
+  ../turbo-bucketizer --ip <a.b.c.d> --k <0..32> [--a HEX] [--b HEX] [--preset NAME]
+  ../turbo-bucketizer --selftest [--cidr A.B.C.D/NN] [--k <0..32>] [--sample N] [--a HEX] [--b HEX] [--preset NAME]
+  ../turbo-bucketizer --bench [N] [--k <0..32>] [--preset NAME]
+
+Presets: default | wang
+
+Esempi:
+  ../turbo-bucketizer --ip 192.168.0.1 --k 12 --preset default
+  ../turbo-bucketizer --selftest --cidr 10.0.0.0/16 --k 12 --preset wang
+  ../turbo-bucketizer --bench 20000000 --k 12 --preset wang
