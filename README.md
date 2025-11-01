@@ -71,14 +71,12 @@ Demo benchmark: 350–500 M/s su laptop, 1.3 G/s su macchina ottimizzata.
 **Turbo-Bucketizer** suddivide lo spazio IPv4 in \(2^k\) bucket deterministici  
 usando una permutazione affine modulo \(2^{32}\):
 
-\[
-y = (a \cdot x + b) \bmod 2^{32}, \quad \text{bucket}(x) = y \gg (32 - k)
-\]
+`y = (a*x + b) mod 2^32; bucket(x) = y >> (32 - k)
 
 Nessun database, nessun lookup: ogni IP trova il suo bucket in **O(1)** costante  
 (una moltiplicazione, un add e uno shift).  
 
-📘 [Approfondisci → Theory & Design Notes](docs/THEORY.md)
+📘 [Approfondisci → Theory & Design Notes](./THEORY.md)
 
 Nato per gioco nel laboratorio **Giadaware**,
 il Turbo-Bucketizer è un tributo al caos che si lascia domare (ma solo per finta!).
@@ -89,9 +87,9 @@ il Turbo-Bucketizer è un tributo al caos che si lascia domare (ma solo per fint
 
 * [X] Versione CLI pubblica
 * [ ] API REST (`/bucket?ip=…&k=…`)
-* [ ] Doc tecnica + whitepaper breve
+* [X] Doc tecnica + whitepaper breve
 * [ ] Versione “Turbo-Pro” con preset tables adattive
-* [ ] Banane per tutti 🍌
+* [X] Banane per tutti 🍌
 
 ---
 
