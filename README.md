@@ -84,6 +84,8 @@ Nessun database, nessun lookup: ogni IP trova il suo bucket in **O(1)** costante
 Nato per gioco nel laboratorio **Giadaware**,
 il Turbo-Bucketizer è un tributo al caos che si lascia domare (ma solo per finta!).
 
+🛠️ [Usage guide](docs/USAGE.md)
+
 ---
 
 ## 🛠️ Roadmap
