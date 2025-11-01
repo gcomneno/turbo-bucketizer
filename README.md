@@ -1,8 +1,6 @@
 <h1 align="center">🌀 Turbo-Bucketizer</h1>
 <p align="center"><em>Distribuisci IPv4 in modo uniforme e deterministico ad alta entropia.</em></p>
-<p align="center">
-  <img alt="Build Status" src="https://github.com/gcomneno/turbo-bucketizer/actions/workflows/ci.yml/badge.svg?branch=main">
-</p>
+
 <p align="center">
   <a href="https://github.com/gcomneno/turbo-bucketizer/stargazers">
     <img alt="Stars" src="https://img.shields.io/github/stars/gcomneno/turbo-bucketizer?style=for-the-badge&label=Stars">
@@ -13,9 +11,6 @@
   <a href="https://github.com/sponsors/gcomneno">
     <img alt="Sponsor" src="https://img.shields.io/badge/Sponsor%20La%20Scimmia%20Curiosa-💖-ea4aaa?style=for-the-badge">
   </a>
-  <a href="https://github.com/gcomneno/turbo-bucketizer/actions/workflows/ci.yml">
-    <img alt="Build Status" src="https://github.com/gcomneno/turbo-bucketizer/actions/workflows/ci.yml/badge.svg">
-  </a>
   <a href="https://github.com/gcomneno/turbo-bucketizer/blob/main/LICENSE">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge">
   </a>
@@ -23,117 +18,129 @@
 
 ---
 
-> 💖 Questo progetto è sostenuto dagli sponsor del **Laboratorio Semi-Serio Giadaware** — [Diventa sponsor!](https://github.com/sponsors/gcomneno)
+> 💖 Progetto sostenuto dagli sponsor del **Laboratorio Semi-Serio Giadaware** — [Diventa sponsor](https://github.com/sponsors/gcomneno)
 
 ---
 
-## 🧩 Descrizione
-**Turbo-Bucketizer** è un esperimento tecnico-poetico:  
-un partizionatore deterministico di indirizzi IPv4 basato su **affine permutation mod 2³²**,  
-ottimizzato per una distribuzione uniforme anche su input non casuali (es. blocchi CIDR).
+## 🧩 Cos'è
+**Turbo-Bucketizer** è un partizionatore deterministico per IPv4 basato su **affine permutation mod 2³²**.  
+Obiettivo: ottenere bucket quasi perfettamente equilibrati anche con input non-IID (es. blocchi CIDR corposi), in **O(1)** per IP.
 
-In parole povere:  
-> prendi un IP, scegli un K, e ottieni un bucket quasi perfettamente equilibrato.  
-> Tutto in un colpo solo, senza database, senza magia (solo matematica ma con ironia).
+In parole povere:
+> prendi un IP, scegli \(k\), ottieni un bucket tra \(0..2^k-1\).  
+> Niente DB, niente lookup: solo una moltiplicazione, una somma e uno shift.
 
 ---
 
-## ⚙️ Esempio d’uso
+## ⚡ Quickstart
 
 ```bash
-$ ./turbo-bucketizer --ip 192.168.0.1 --k 12
-Bucket: 2781
-
-$ ./turbo-bucketizer --map subnet 10.0.0.0/8 --k 16
-Buckets: 65536  (uniformità ~99.998%)
+git clone https://github.com/gcomneno/turbo-bucketizer.git
+cd turbo-bucketizer
+make all         # oppure: python3 build.py
+./turbo-bucketizer --selftest
 ````
 
-Output deterministico, copertura totale, velocità indecente.
-Demo benchmark: 350–500 M/s su laptop, 1.3 G/s su macchina ottimizzata.
+### Esempi CLI
 
-### 📊 Results
+```bash
+# Bucket singolo
+./turbo-bucketizer --ip 192.168.0.1 --k 12
+# -> Bucket: 2781
 
-| Test | Preset | CIDR | k | Samples | Uniformity | χ² | Max Dev |
-|-----:|:------:|:----:|:-:|--------:|-----------:|---:|--------:|
-| Self-test | default | 10.0.0.0/8 | 12 | 986,896 | **99.459%** | 42.691 | 1.64% |
-| Bench | wang | — | 12 | 20,000,000 iters | **~247 Mops/s** | — | — |
+# Mappatura di un blocco CIDR
+./turbo-bucketizer --map subnet 10.0.0.0/8 --k 16
+# -> Buckets: 65536 (uniformità ~99.998%)*
 
-> 💡 `default` = a=0x9E3779B1, b=0x85EBCA77 — `wang` = a=0x27D4EB2D, b=0x165667B1
+# Pipeline: lista IP -> TSV (ip\tbucket)
+cat ips.txt | ./turbo-bucketizer --stdin --k 14 > map.tsv
+```
 
----
-
-## 📜 Filosofia
-
-> “Se puoi bucketizzarlo, allora puoi comprenderlo.”
-> — *La Scimmia Curiosa, 2025*
+* Uniformità indicativa: aggiorna con i tuoi numeri reali nella sezione **Benchmark**.
 
 ---
 
-### ⚙️ How it works
+## 🔬 Benchmark (indicativi)
 
-**Turbo-Bucketizer** suddivide lo spazio IPv4 in \(2^k\) bucket deterministici  
-usando una permutazione affine modulo \(2^{32}\):
+> Aggiorna con i risultati della tua macchina. Qui un seed di formato.
 
-y = (a*x + b) mod 2^32; bucket(x) = y >> (32 - k)
+| Test        | Preset  | Input           | k  | Samples       | Throughput       | Uniformity  | χ²     | Max Dev |
+| ----------- | ------- | --------------- | -- | ------------- | ---------------- | ----------- | ------ | ------- |
+| Self-test   | default | 10.0.0.0/8      | 12 | 986,896       | —                | **99.459%** | 42.691 | 1.64%   |
+| Micro-bench | wang    | random (32-bit) | 12 | 20,000,000 it | **~247 Mops/s**  | —           | —      | —       |
+| Map demo    | default | 0.0.0.0/0       | 16 | 1,000,000     | ~350–500 M/s (*) | ~99.99%     | —      | <2%     |
 
-Nessun database, nessun lookup: ogni IP trova il suo bucket in **O(1)** costante  (una moltiplicazione, una somma ed uno shift).  
+> (*) Laptop x86_64; su macchina ottimizzata: **~1.3 G/s** per la mappa in C.
 
-Nato per gioco nel laboratorio **Giadaware**, il Turbo-Bucketizer è un tributo al caos che si lascia domare (ma solo per finta!).
+**Preset note:**
 
-📘 [Approfondisci → Theory & Design Notes](./THEORY.md)
+* `default`: `a=0x9E3779B1`, `b=0x85EBCA77`
+* `wang`:    `a=0x27D4EB2D`, `b=0x165667B1`
 
-🛠️ [Usage guide](./USAGE.md)
+---
 
-📖 [Glossary](./GLOSSARY.md) — definizioni chiave
+## 🧠 How it works
 
+La funzione è una **permutazione** dello spazio (2^{32}):
+
+```text
+y = (a * x + b) mod 2^32
+bucket(x) = y >> (32 - k)
+```
+
+Dove:
+
+* (x) = IPv4 come intero 32-bit,
+* (a) è **invertibile** modulo (2^{32}) (odd), (b) è l’offset,
+* lo shift prende i bit alti di (y) per il bucket ([0 .. 2^k-1]).
+
+Caratteristiche:
+
+* **Deterministico** (seed = preset ((a,b))),
+* **Uniformità** robusta su input non-IID (CIDR compatti),
+* **O(1)** per IP, zero stato, zero DB.
+
+📘 Approfondimenti: [`THEORY.md`](./THEORY.md) · Guida d’uso: [`USAGE.md`](./USAGE.md) · Glossario: [`GLOSSARY.md`](./GLOSSARY.md)
 
 ---
 
 ## 🛠️ Roadmap
 
-* [X] Versione CLI pubblica
-* [X] Doc tecnica + whitepaper breve
-* [ ] Versione “Turbo-Pro” con preset tables adattive
-* [ ] Binary per macOS/Windows
+* [x] CLI pubblica
+* [x] Note tecniche (whitepaper breve)
+* [ ] **Preset tables adattive** (ricerca automatica di ((a,b)) per (k)/dataset)
 * [ ] Benchmark suite riproducibile + multi-thread
+* [ ] Binary per macOS/Windows
 * [ ] API REST (`/bucket?ip=…&k=…`)
-* [X] Banane per tutti 🍌
+* [x] Banane per tutti 🍌
 
 ---
 
 ## 🚀 Release & Download
 
-> ⚠️ La versione pubblica è in arrivo: la scimmia sta ancora lucidando i bucket.  
-> Nel frattempo puoi **seguire il progetto** o **compilare la versione sperimentale**.
+> Le **release binarie** sono in preparazione. Nel frattempo: compila da sorgente.
 
-### 🔹 Release ufficiali
-Quando la build pubblica sarà pronta, troverai qui:
-- Binari per **Linux**, **macOS** e **Windows**
-- Script Python demo (`demo_bucket.py`, `map_ipv4.py`)
-- File di preset (`preset_table.tsv`)
+Quando saranno pronte troverai:
 
-📦 **Distribuzione prevista:**
-- [Gumroad — Turbo-Bucketizer](https://gumroad.com/) *(coming soon)*
-- [Itch.io — Club dell’Assurdo Edition](https://itch.io/) *(coming soon)*
+* Binari per **Linux**, **macOS**, **Windows**
+* Script demo Python (`demo_bucket.py`, `map_ipv4.py`)
+* `preset_table.tsv` (fallback + preset consigliati)
+
+Possibili canali:
+
+* Gumroad — Turbo-Bucketizer *(coming soon)*
+* Itch.io — Club dell’Assurdo Edition *(coming soon)*
 
 ---
 
-### 🔹 Compila da sorgente (per smanettoni)
+## 🤝 Contribuire
 
-```bash
-git clone https://github.com/gcomneno/turbo-bucketizer.git
-cd turbo-bucketizer
-make all     # o python3 build.py
-./turbo-bucketizer --selftest
-````
+* Metti ⭐, apri una [Discussion](https://github.com/gcomneno/turbo-bucketizer/discussions)
+* Proponi una [Feature](https://github.com/gcomneno/turbo-bucketizer/issues/new?labels=enhancement&template=feature.md) o una PR
+* Condividi benchmark riproducibili (spec macchina + comandi)
 
 > Se funziona al primo colpo, probabilmente hai sbagliato qualcosa.
-> — *Giadaware internal proverb*
-
----
-
-> ⭐ Ti piace il progetto? Metti una stella, apri una [Discussion](https://github.com/gcomneno/turbo-bucketizer/discussions)  o proponi una [Feature](https://github.com/gcomneno/turbo-bucketizer/issues/new?labels=enhancement&template=feature.md)!  
-> Ogni idea alimenta il laboratorio semi-serio di **Giadaware** 🎉
+> — *Proverbio interno Giadaware*
 
 ---
 
@@ -142,11 +149,8 @@ make all     # o python3 build.py
 Sviluppato da **Giancarlo** ([@gcomneno](https://github.com/gcomneno))
 con il supporto morale di **La Scimmia Curiosa** e del **Club dell’Assurdo**.
 
----
-
 <p align="center">
   <a href="https://www.giadaware.it">🌐 Giadaware.it</a> •
-  <a href="https://www.clubdellassurdo.it">🌀 Club dell’Assurdo</a>
+  <a href="https://www.clubdellassurdo.it">🌀 Club dell’Assurdo</a> •
+  <a href="https://github.com/sponsors/gcomneno">💖 GitHub Sponsors</a>
 </p>
-
-<p align="center"><em>💖 Sponsor by <a href="https://github.com/sponsors/gcomneno">La Scimmia Curiosa</a> — perché anche i bit hanno bisogno di banane.</em></p>
