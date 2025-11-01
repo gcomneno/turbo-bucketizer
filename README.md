@@ -76,15 +76,16 @@ usando una permutazione affine modulo \(2^{32}\):
 
 y = (a*x + b) mod 2^32; bucket(x) = y >> (32 - k)
 
-Nessun database, nessun lookup: ogni IP trova il suo bucket in **O(1)** costante  
-(una moltiplicazione, un add e uno shift).  
+Nessun database, nessun lookup: ogni IP trova il suo bucket in **O(1)** costante  (una moltiplicazione, una somma ed uno shift).  
+
+Nato per gioco nel laboratorio **Giadaware**, il Turbo-Bucketizer è un tributo al caos che si lascia domare (ma solo per finta!).
 
 📘 [Approfondisci → Theory & Design Notes](./THEORY.md)
 
-Nato per gioco nel laboratorio **Giadaware**,
-il Turbo-Bucketizer è un tributo al caos che si lascia domare (ma solo per finta!).
+🛠️ [Usage guide](./USAGE.md)
 
-🛠️ [Usage guide](docs/USAGE.md)
+📖 [Glossary](./GLOSSARY.md) — definizioni chiave
+
 
 ---
 
