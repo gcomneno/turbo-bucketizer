@@ -13,6 +13,9 @@
   <a href="https://github.com/sponsors/gcomneno">
     <img alt="Sponsor" src="https://img.shields.io/badge/Sponsor%20La%20Scimmia%20Curiosa-💖-ea4aaa?style=for-the-badge">
   </a>
+  <a href="https://github.com/gcomneno/turbo-bucketizer/actions/workflows/ci.yml">
+    <img alt="Build Status" src="https://github.com/gcomneno/turbo-bucketizer/actions/workflows/ci.yml/badge.svg">
+  </a>
   <a href="https://github.com/gcomneno/turbo-bucketizer/blob/main/LICENSE">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge">
   </a>
@@ -71,7 +74,7 @@ Demo benchmark: 350–500 M/s su laptop, 1.3 G/s su macchina ottimizzata.
 **Turbo-Bucketizer** suddivide lo spazio IPv4 in \(2^k\) bucket deterministici  
 usando una permutazione affine modulo \(2^{32}\):
 
-`y = (a*x + b) mod 2^32; bucket(x) = y >> (32 - k)
+y = (a*x + b) mod 2^32; bucket(x) = y >> (32 - k)
 
 Nessun database, nessun lookup: ogni IP trova il suo bucket in **O(1)** costante  
 (una moltiplicazione, un add e uno shift).  
