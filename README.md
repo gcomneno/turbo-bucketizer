@@ -68,7 +68,7 @@ il Turbo-Bucketizer è un tributo al caos che si lascia domare (ma solo per fint
 
 ## 🛠️ Roadmap
 
-* [ ] Versione CLI pubblica
+* [X] Versione CLI pubblica
 * [ ] API REST (`/bucket?ip=…&k=…`)
 * [ ] Doc tecnica + whitepaper breve
 * [ ] Versione “Turbo-Pro” con preset tables adattive
