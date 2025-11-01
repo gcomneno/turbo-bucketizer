@@ -1,8 +1,8 @@
-<h1 align="center">🌀 Turbo-Bucketizer</h1><p align="center">
-  <img src="https://img.shields.io/badge/Status-Coming%20Soon-orange?style=for-the-badge">
-</p>
+<h1 align="center">🌀 Turbo-Bucketizer</h1>
 <p align="center"><em>Distribuisci IPv4 in modo uniforme e deterministico ad alta entropia.</em></p>
-
+<p align="center">
+  <img alt="Build Status" src="https://github.com/gcomneno/turbo-bucketizer/actions/workflows/ci.yml/badge.svg?branch=main">
+</p>
 <p align="center">
   <a href="https://github.com/gcomneno/turbo-bucketizer/stargazers">
     <img alt="Stars" src="https://img.shields.io/github/stars/gcomneno/turbo-bucketizer?style=for-the-badge&label=Stars">
