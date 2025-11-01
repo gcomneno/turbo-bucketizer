@@ -13,6 +13,9 @@
   <a href="https://github.com/sponsors/gcomneno">
     <img alt="Sponsor" src="https://img.shields.io/badge/Sponsor%20La%20Scimmia%20Curiosa-💖-ea4aaa?style=for-the-badge">
   </a>
+  <a href="https://github.com/gcomneno/turbo-bucketizer/blob/main/LICENSE">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge">
+  </a>
 </p>
 
 ---
@@ -60,6 +63,22 @@ Demo benchmark: 350–500 M/s su laptop, 1.3 G/s su macchina ottimizzata.
 
 > “Se puoi bucketizzarlo, allora puoi comprenderlo.”
 > — *La Scimmia Curiosa, 2025*
+
+---
+
+### ⚙️ How it works
+
+**Turbo-Bucketizer** suddivide lo spazio IPv4 in \(2^k\) bucket deterministici  
+usando una permutazione affine modulo \(2^{32}\):
+
+\[
+y = (a \cdot x + b) \bmod 2^{32}, \quad \text{bucket}(x) = y \gg (32 - k)
+\]
+
+Nessun database, nessun lookup: ogni IP trova il suo bucket in **O(1)** costante  
+(una moltiplicazione, un add e uno shift).  
+
+📘 [Approfondisci → Theory & Design Notes](docs/THEORY.md)
 
 Nato per gioco nel laboratorio **Giadaware**,
 il Turbo-Bucketizer è un tributo al caos che si lascia domare (ma solo per finta!).
