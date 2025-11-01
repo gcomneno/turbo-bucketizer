@@ -1,4 +1,6 @@
-<h1 align="center">🌀 Turbo-Bucketizer</h1>
+<h1 align="center">🌀 Turbo-Bucketizer</h1><p align="center">
+  <img src="https://img.shields.io/badge/Status-Coming%20Soon-orange?style=for-the-badge">
+</p>
 <p align="center"><em>Distribuisci IPv4 in modo uniforme e deterministico ad alta entropia.</em></p>
 
 <p align="center">
@@ -62,6 +64,37 @@ il Turbo-Bucketizer è un tributo al caos che si lascia domare (ma solo per fint
 * [ ] Doc tecnica + whitepaper breve
 * [ ] Versione “Turbo-Pro” con preset tables adattive
 * [ ] Banane per tutti 🍌
+
+---
+
+## 🚀 Release & Download
+
+> ⚠️ La versione pubblica è in arrivo: la scimmia sta ancora lucidando i bucket.  
+> Nel frattempo puoi **seguire il progetto** o **compilare la versione sperimentale**.
+
+### 🔹 Release ufficiali
+Quando la build pubblica sarà pronta, troverai qui:
+- Binari per **Linux**, **macOS** e **Windows**
+- Script Python demo (`demo_bucket.py`, `map_ipv4.py`)
+- File di preset (`preset_table.tsv`)
+
+📦 **Distribuzione prevista:**
+- [Gumroad — Turbo-Bucketizer](https://gumroad.com/) *(coming soon)*
+- [Itch.io — Club dell’Assurdo Edition](https://itch.io/) *(coming soon)*
+
+---
+
+### 🔹 Compila da sorgente (per smanettoni)
+
+```bash
+git clone https://github.com/gcomneno/turbo-bucketizer.git
+cd turbo-bucketizer
+make all     # o python3 build.py
+./turbo-bucketizer --selftest
+````
+
+> Se funziona al primo colpo, probabilmente hai sbagliato qualcosa.
+> — *Giadaware internal proverb*
 
 ---
 
