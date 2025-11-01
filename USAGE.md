@@ -11,7 +11,7 @@ Guida rapida per usare il binario, fare self-test, benchmark e integrare nei tuo
 2. Verifica lo **sha256**:
    ```bash
    sha256sum -c turbo-bucketizer-*-v*.zip.sha256
-````
+```
 
 3. Estrai e rendi eseguibile:
 
@@ -140,6 +140,6 @@ chmod +x ./turbo-bucketizer
 
 ## 7) Riferimenti
 
-* 📘 Teoria: [Theory & Design Notes](docs/THEORY.md)
-* 📄 Mini-paper: `./README.md`
-* 🧾 Changelog: [CHANGELOG.md](../CHANGELOG.md)
+* 📘 Teoria: [Theory & Design Notes](./THEORY.md)
+* 📄 Mini-paper: [README](./README.md)
+* 🧾 Changelog: [CHANGELOG.md](./CHANGELOG.md)
