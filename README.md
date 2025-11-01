@@ -91,9 +91,11 @@ il Turbo-Bucketizer è un tributo al caos che si lascia domare (ma solo per fint
 ## 🛠️ Roadmap
 
 * [X] Versione CLI pubblica
-* [ ] API REST (`/bucket?ip=…&k=…`)
 * [X] Doc tecnica + whitepaper breve
 * [ ] Versione “Turbo-Pro” con preset tables adattive
+* [ ] Binary per macOS/Windows
+* [ ] Benchmark suite riproducibile + multi-thread
+* [ ] API REST (`/bucket?ip=…&k=…`)
 * [X] Banane per tutti 🍌
 
 ---
@@ -129,8 +131,7 @@ make all     # o python3 build.py
 
 ---
 
-> ⭐ Ti piace il progetto? Metti una stella, apri una [Discussion](https://github.com/gcomneno/turbo-bucketizer/discussions)  
-> o proponi una [Feature](https://github.com/gcomneno/turbo-bucketizer/issues/new?labels=enhancement&template=feature.md)!  
+> ⭐ Ti piace il progetto? Metti una stella, apri una [Discussion](https://github.com/gcomneno/turbo-bucketizer/discussions)  o proponi una [Feature](https://github.com/gcomneno/turbo-bucketizer/issues/new?labels=enhancement&template=feature.md)!  
 > Ogni idea alimenta il laboratorio semi-serio di **Giadaware** 🎉
 
 ---
