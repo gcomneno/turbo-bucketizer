@@ -129,6 +129,12 @@ make all     # o python3 build.py
 
 ---
 
+> ⭐ Ti piace il progetto? Metti una stella, apri una [Discussion](https://github.com/gcomneno/turbo-bucketizer/discussions)  
+> o proponi una [Feature](https://github.com/gcomneno/turbo-bucketizer/issues/new?labels=enhancement&template=feature.md)!  
+> Ogni idea alimenta il laboratorio semi-serio di **Giadaware** 🎉
+
+---
+
 ## 💡 Credits
 
 Sviluppato da **Giancarlo** ([@gcomneno](https://github.com/gcomneno))
