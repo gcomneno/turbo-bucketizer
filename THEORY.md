@@ -8,12 +8,9 @@
 **Turbo-Bucketizer** partiziona l’intero spazio IPv4 in \(2^k\) bucket deterministici,  
 usando una *permutazione affine modulo \(2^{32}\)*:
 
-\[
-y = (a \cdot x + b) \bmod 2^{32}
-\]
-\[
-\text{bucket}(x) = y \gg (32 - k)
-\]
+$$
+y = (a \cdot x + b) \bmod 2^{32}, \quad \mathrm{bucket}(x) = y \gg (32 - k)
+$$
 
 Dove:
 - \(x\) è l’indirizzo IPv4 in formato numerico (32 bit)
