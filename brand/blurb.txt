@@ -1,0 +1,4 @@
+Turbo-Bucketizer è un algoritmo deterministico per il partizionamento IPv4
+basato su permutazioni affini modulo 2^32.
+Zero database, O(1) secco, uniformità del 99%.
+Fa parte del laboratorio "semi-serio" di Giadaware (Giancarlo Cicellyn Comneno).
