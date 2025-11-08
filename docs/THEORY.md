@@ -4,7 +4,6 @@
 ---
 
 ## 1️⃣ Concept
-
 **Turbo-Bucketizer** partiziona l’intero spazio IPv4 in \(2^k\) bucket deterministici,  
 usando una *permutazione affine modulo \(2^{32}\)*:
 
@@ -33,25 +32,25 @@ ogni bucket viene calcolato **direttamente**, in tempo **O(1)** costante.
 | Invertibilità | No | Sì, se \(a\) è dispari |
 
 💡 **Idea chiave:** invece di “mappare” valori, li **permutiamo** nell’intero dominio \(2^{32}\).  
-Ogni indirizzo IP trova il suo posto con una moltiplicazione, un somma e uno shift. Fine.
+Ogni indirizzo IP trova il suo posto con una moltiplicazione, una somma e uno shift. Fine.
 
 ---
 
 ## 3️⃣ Implicazioni pratiche
 
-- ⚡ **Zero stato**
+- ⚡ **Zero stato**  
   → nessuna tabella, nessuna cache: ogni nodo può ricomputare lo stesso bucket in locale.
 
-- 🧩 **Uniformità quasi perfetta**
+- 🧩 **Uniformità quasi perfetta**  
   → la permutazione affine distribuisce i 32 bit in modo regolare anche su intervalli contigui (es. subnet /8).
 
-- 🧠 **Determinismo riproducibile**
+- 🧠 **Determinismo riproducibile**  
   → stesso IP + stessi parametri → stesso bucket, sempre.
 
-- 🧱 **Scalabilità lineare**
+- 🧱 **Scalabilità lineare**  
   → perfetto per load-balancing, sharding, proxy distribuiti, simulazioni o metriche su spazi IPv4.
 
-- 🏎️ **Prestazioni**
+- 🏎️ **Prestazioni**  
   → 247–281 Mops/s su CPU x86_64 a 3 GHz (`-O3 -march=native`)  
     = miliardi di bucketizzazioni al minuto, in single thread.
 
@@ -72,7 +71,7 @@ Ogni spicchio è un bucket, e l’intero cerchio è una partizione perfettamente
 
 > Se un hash classico è un **mescolatore caotico**,  
 > Turbo-Bucketizer è un **rotatore geometrico**.  
->  
+>
 > Non genera rumore, genera simmetria.  
 > Non cerca equilibrio, lo costruisce con aritmetica modulare.
 
@@ -93,9 +92,9 @@ Ogni spicchio è un bucket, e l’intero cerchio è una partizione perfettamente
 ## 7️⃣ Complessità e invertibilità
 
 - **Tempo:** O(1) esatto  
-  \> una sola moltiplicazione, un add, un modulo implicito (overflow 32 bit), uno shift.  
+  → una sola moltiplicazione, un add, un overflow 32 bit, uno shift.  
 - **Spazio:** O(1)  
-  \> non memorizza nulla, opera in-place.  
+  → non memorizza nulla, opera in-place.  
 - **Invertibilità:** se \(a\) è dispari → \(\exists a^{-1}\) mod \(2^{32}\)  
   → puoi risalire all’IP originale (funzione affine invertibile).
 
@@ -104,9 +103,21 @@ Ogni spicchio è un bucket, e l’intero cerchio è una partizione perfettamente
 ## 8️⃣ Filosofia
 
 > Il caso è solo una forma di ordine non ancora compresa.  
->  
+>
 > Turbo-Bucketizer dimostra che la casualità può essere calcolata,  
 > e che perfino un indirizzo IP ha la sua eleganza geometrica.
+
+---
+
+## 9️⃣ Appendice — Estensioni v0.1.1
+
+- ✅ Supporto a `k=0` → tutti i bucket = 0 (singolo spicchio)  
+- ✅ Supporto a `k=32` → shift nullo, bucket = y pieno 32 bit  
+- ✅ Aggiunta funzionalità **`--export`**:
+  - esporta la sequenza completa dei bucket in TXT o CSV  
+  - opzioni `--limit`, `--export-format`, `--no-header`
+  - log finale con checksum FNV-1a 64
+- ✅ Output compatibile con gli analyzer esterni (`digit_probe.py`, *Schur Probe*)
 
 ---
 
