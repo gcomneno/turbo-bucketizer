@@ -5,7 +5,7 @@
 #include "tb_export.h"
 
 #if defined(_WIN32) || defined(_WIN64)
-    #define strcasecmp _stricmp
+#define strcasecmp _stricmp
 #endif
 
 static uint64_t fnv1a64_init(void){ return 0xcbf29ce484222325ULL; }

@@ -28,7 +28,7 @@ typedef struct {
     uint64_t   written;
     uint64_t   limit;
     bool       first_txt_token;
-    uint64_t   fnv64;     /* checksum progressivo */
+    uint64_t   fnv64;           /* checksum progressivo */
     bool       csv_header_done;
     bool       to_stdout;
 } tb_exporter_t;
