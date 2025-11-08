@@ -2,3 +2,4 @@
 /build/*.o
 .DS_Store
 /dist
+/.tmp_tests

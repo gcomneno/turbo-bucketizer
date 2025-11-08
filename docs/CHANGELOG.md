@@ -1,10 +1,28 @@
 # 🧾 Changelog — Turbo-Bucketizer
-
 Tutti i cambiamenti rilevanti del progetto **Turbo-Bucketizer** sono documentati qui.  
 Formato basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/).
 
 ---
+## [v0.1.1] — 2025-11-08
+### ✨ Aggiunto
+- `--export <path|->` per salvare la **sequenza completa di bucket**:
+  - TXT: una riga con bucket separati da spazio
+  - CSV: `index,bucket` (header opzionale con `--no-header`)
+- `--export-format {txt|csv}` per forzare il formato (override dell’estensione)
+- `--limit N` per esportare solo i primi N bucket
+- Log export con **checksum FNV-1a 64**:
 
+### 🧪 Test & Build
+- Nuova **test-suite** `build/run_tests.sh`:
+- formati TXT/CSV, `--limit`, determinismo, preset diversity
+- edge-cases `k=0` / `k=32`, `stdin`, selftest/bench con export
+- VLSM smoke-tests, hook opzionale a `digit_probe.py`
+- `build/Makefile`: aggiunto `tb_export.c` alle sorgenti; target `test`.
+
+### 📌 Note
+- Export TXT è **plug-and-play** con `digit_probe.py`
+
+---
 ## [v0.1] — 2025-11-01
 ### 🎉 Primo rilascio pubblico (MVP)
 **Nome in codice:** *“La scimmia l’ha fatta grossa”* 🐒💥
